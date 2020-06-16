@@ -1,0 +1,80 @@
+{
+  "plugins\/infoloc\/desktop\/php\/infoloc.php": {
+    "Gestion": "Gestion",
+    "Ajouter Client": "Ajouter Client",
+    "Ajouter Adresse": "Ajouter Adresse",
+    "Mes clients": "Mes clients",
+    "Mes adresses": "Mes adresses",
+    "Rechercher": "Rechercher",
+    "Configuration avancée": "Configuration avancée",
+    "Dupliquer": "Dupliquer",
+    "Sauvegarder": "Sauvegarder",
+    "Supprimer": "Supprimer",
+    "Equipement": "Equipement",
+    "Commandes": "Commandes",
+    "Nom de l'équipement": "Nom de l'équipement",
+    "Objet parent": "Objet parent",
+    "Aucun": "Aucun",
+    "Ping ICMP": "Ping ICMP",
+    "Ping ARP": "Ping ARP",
+    "Scan ARP": "Scan ARP",
+    "Adresse IP": "Adresse IP",
+    "Adresse MAC": "Adresse MAC",
+    "Activer": "Activer",
+    "Visible": "Visible",
+    "Mode": "Mode",
+    "Exemple d'URL à appeler": "Exemple d'URL à appeler",
+    "Nom": "Nom",
+    "Type": "Type",
+    "Options": "Options",
+    "Paramètres": "Paramètres",
+    "Cliquez-ici pour obtenir les coordonnées": "Cliquez-ici pour obtenir les coordonnées"
+  },
+  "plugins\/infoloc\/desktop\/js\/infoloc.js": {
+    "Numérique": "Numérique",
+    "Binaire": "Binaire",
+    "Autre": "Autre",
+    "Distance": "Distance",
+    "Distance directe": "Distance directe",
+    "Distance du trajet": "Distance du trajet",
+    "Temps de trajet": "Temps de trajet",
+    "Batterie": "Batterie",
+    "Autoroutes": "Autoroutes",
+    "Péages": "Péages",
+    "Ferry": "Ferry",
+    "Voiture": "Voiture",
+    "Poid Lourd": "Poid Lourd",
+    "Vélo": "Vélo",
+    "Marchant": "Marchant",
+    "Sauvegarde réussie": "Sauvegarde réussie"
+  },
+  "plugins\/infoloc\/core\/ajax\/infoloc.ajax.php": {
+    "Equipement inconnu : ": "Equipement inconnu : ",
+    "Equipement non Infos & Localisation : ": "Equipement non Infos & Localisation : "
+  },    
+  "plugins\/infoloc\/core\/api\/jeeInfoloc.php": {
+    "Commande ID inconnue : ": "Commande ID inconnue : ",
+    "Commande inconnue de Infos & Localisation : ": "Commande inconnue de Infos & Localisation : ",
+    "Commande Infos & Localisation non autorisée : ": "Commande Infos & Localisation non autorisée : "
+  },    
+  "plugins\/infoloc\/core\/class\/infoloc.class.php": {
+    "Position GPS": "Position GPS",
+    "Présent": "Présent",
+    "Cet équipement à déjà une commande de batterie": "Cet équipement à déjà une commande de batterie",
+    "Erreur Hostname (gethostbyname)": "Erreur Hostname (gethostbyname)",
+    "Erreur adresse mac": "Erreur adresse mac"
+  },
+  "plugins\/infoloc\/plugin_info\/configuration.php": {
+    "Coordonnées Jeedom": "Coordonnées Jeedom",
+    "Configurer ici": "Configurer ici",
+    "Droits sudo": "Droits sudo",
+    "Appliquez les droits root à Jeedom": "Appliquez les droits root à Jeedom",
+    "Commande ping": "Commande ping",
+    "Commande arping": "Commande arping",
+    "Commande arp-scan": "Commande arp-scan",
+    "Detecter les programmes": "Detecter les programmes"
+  },
+  "plugins\/infoloc\/plugin_info\/install.php": {
+    "Les commandes doivent être reconfigurées dans la gestion du plugin.": "Les commandes doivent être reconfigurées dans la gestion du plugin."
+  },
+}
