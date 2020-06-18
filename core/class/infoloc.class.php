@@ -194,7 +194,15 @@ class infoloc extends eqLogic {
         if( $this->getIsEnable() && $this->getConfiguration('pingMode') != 'none' ) {
             log::add('infoloc','debug','Ping: '.$this->getHumanName());
             log::add('infoloc','debug','Mode : '.$this->getConfiguration('pingMode'));
+
             $presentCmd = $this->getCmd(null, 'present');
+            $posgpsCmd = $this->getCmd(null, 'gpspos');
+            $geo = config::byKey('info::latitude').','.config::byKey('info::longitude');
+            if( $cmd->validateLatLong($geo) ) {
+                $gpspos = $geo;
+            } else {
+                $gpspos = '';
+            }
 
             switch( $this->getConfiguration('pingMode') ) {
                 case 'arps':
@@ -210,6 +218,7 @@ class infoloc extends eqLogic {
                     if( preg_match("/\t".strtolower($this->getConfiguration('pingmac'))."\t/", strtolower(join("\n", $return))) ) {
                         if( $presentCmd->execCmd() != 1 ) {
                             $presentCmd->event(1);
+                            $posgpsCmd->event($geo);
                             log::add('infoloc','info',$this->getHumanName().' '.__('est présent', __FILE__));
                         }
                     } else {
@@ -234,6 +243,7 @@ class infoloc extends eqLogic {
                     if( preg_match("/([a-fA-F0-9:]{17}|[a-fA-F0-9]{12})\s\(".$this->getConfiguration('pingip')."\):\s/", $line) ) {
                         if( $presentCmd->execCmd() != 1 ) {
                             $presentCmd->event(1);
+                            $posgpsCmd->event($geo);
                             log::add('infoloc','info',$this->getHumanName().' '.__('est présent', __FILE__));
                         }
                     } else {
@@ -255,6 +265,7 @@ class infoloc extends eqLogic {
                     if( $code == 0 ) {
                         if( $presentCmd->execCmd() != 1 ) {
                             $presentCmd->event(1);
+                            $posgpsCmd->event($geo);
                             log::add('infoloc','info',$this->getHumanName().' '.__('est présent', __FILE__));
                         }
                     } else {

@@ -53,22 +53,49 @@ Sur la partie haute de cette page, vous avez plusieurs boutons.
 
 #### 1. Ajout d'un client
 
+![ClientConfig](../images/6_equipement.png)
+
 Comme partout dans Jeedom vous pouvez ici :
 
 - Donner un nom.
-- Choisir son objet parent.
+- Choisir l'objet parent.
 - L’activer/le rendre visible ou non.
+
+Et vous pouvez choisir la méthode de détection de présence :
+- Aucune
+- Ping ICMP (nécessite une adresse ip fixe)
+- Ping ARP (nécessite une adresse ip fixe. Sélection de la carte réseau facultative)
+- Scan ARP (nécessite l'adresse MAC. Sélection de la carte réseau facultative)
+
+> **A Noter**
+>
+> Pour les téléphones, tablettes et autres périphériques qui s'endorment, privilégier le scan ARP ou le ping ARP. 
 
 ##### Commandes
 
+![ClientConfig](../images/7_cmdclient.png)
 
+Par défaut, seul les commandes "Présent" & "Position GPS" sont créées.
+
+Vous pouvez ajouter autant de commandes que vous voulez. Les types disponibles sont :
+- Autre : Récupération d'une information texte (nom réseau, nom téléphone, ...)
+- Numérique : Récupération d'une information texte (signal wifi, signal GSM, ...)
+- Binaire : Récupération d'un état (activation BT, activation wifi, ...)
+- Batterie : Commande préconfigurée pour stocker la valeur de batterie du client.
+- Distance Directe : Distance dite "A vol d'Oiseau". Vous devez choisir une "adresse".
+- Distance de trajet : Distance en km. Vous devez choisir une "adresse".
+- Temps de trajet : Temps en secondes. Vous devez choisir une "adresse".
+
+Pour ces deux derniers types, vous pouvez personnaliser les méthodes de calcul.
+- Moyen de transport : Voiture, Vélo, Camion ou à pieds.
+- Routes autorisées : Autouroute (portion gratuite), Péages et Ferry.
 
 #### 2. Ajout d'adresse
 
 Comme partout dans Jeedom vous pouvez ici :
 
 - Donner un nom.
-- Choisir son objet parent.
+- Choisir l'objet parent.
 - L’activer/le rendre visible ou non.
 
 > **A Noter**
@@ -82,3 +109,8 @@ Comme partout dans Jeedom vous pouvez ici :
 Une adresse n'as qu'une commande qui contient les coordonnées.
 Il y à un lien vers un site permettant de récupérer les coordonnées selon une adresse.
 Elle doivent être au format Latitude,Longitude
+
+Exemples de configuration sur mobile
+=========
+
+A venir
