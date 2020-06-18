@@ -45,8 +45,7 @@ function infoloc_update() {
         $cron->setSchedule('* * * * *');
         $cron->save();
 	}
-	log::add('infoloc','error',__('Les commandes doivent être reconfigurées dans la gestion du plugin.',__FILE__));
-	foreach (eqLogic::byType('infoloc') as $eqLogic) {
+	foreach( eqLogic::byType('infoloc') as $eqLogic ) {
 		$eqLogic->save();
 	}
 }

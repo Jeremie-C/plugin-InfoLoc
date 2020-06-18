@@ -56,6 +56,7 @@ class infoloc extends eqLogic {
             $this->setConfiguration('pingMode', 'none');
             $this->setConfiguration('pingip', '127.0.0.1');
             $this->setConfiguration('pingmac', '00:00:00:00:00:00');
+            $this->setConfiguration('pingEth', '');
             log::add('infoloc', 'debug', 'EqLogic - PreInsert CLIENT');
         }
     }
@@ -198,7 +199,8 @@ class infoloc extends eqLogic {
             switch( $this->getConfiguration('pingMode') ) {
                 case 'arps':
                     $cmd = config::byKey('cmd_arpscan', 'infoloc');
-                    $cmd.= ' -l -g --retry=5 -t 800 -T ';
+                    $cmd.= ' -l -g --retry=5 -t 800 -T';
+                    $cmd.= ' -I '.$this->getConfiguration('pingEth').' ';
                     $cmd.= $this->getConfiguration('pingmac').' 2>&1';
 
                     log::add('infoloc','debug',$cmd);
@@ -208,16 +210,19 @@ class infoloc extends eqLogic {
                     if( preg_match("/\t".strtolower($this->getConfiguration('pingmac'))."\t/", strtolower(join("\n", $return))) ) {
                         if( $presentCmd->execCmd() != 1 ) {
                             $presentCmd->event(1);
+                            log::add('infoloc','info',$this->getHumanName().' '.__('est présent', __FILE__));
                         }
                     } else {
                         if( $presentCmd->execCmd() != 0 ) {
                             $presentCmd->event(0);
+                            log::add('infoloc','info',$this->getHumanName().' '.__('est absent', __FILE__));
                         }
                     }
                     break;
                 case 'arpi':
                     $cmd = config::byKey('cmd_arping', 'infoloc');
-                    $cmd.= ' -c 10 -C 1 -w 5 ';
+                    $cmd.= ' -c 10 -C 1 -w 5';
+                    $cmd.= ' -I '.$this->getConfiguration('pingEth').' ';
                     $cmd.= $this->getConfiguration('pingip').' 2>&1';
 
                     log::add('infoloc','debug',$cmd);
@@ -229,10 +234,12 @@ class infoloc extends eqLogic {
                     if( preg_match("/([a-fA-F0-9:]{17}|[a-fA-F0-9]{12})\s\(".$this->getConfiguration('pingip')."\):\s/", $line) ) {
                         if( $presentCmd->execCmd() != 1 ) {
                             $presentCmd->event(1);
+                            log::add('infoloc','info',$this->getHumanName().' '.__('est présent', __FILE__));
                         }
                     } else {
                         if( $presentCmd->execCmd() != 0 ) {
                             $presentCmd->event(0);
+                            log::add('infoloc','info',$this->getHumanName().' '.__('est absent', __FILE__));
                         }
                     }
                     break;
@@ -248,15 +255,16 @@ class infoloc extends eqLogic {
                     if( $code == 0 ) {
                         if( $presentCmd->execCmd() != 1 ) {
                             $presentCmd->event(1);
+                            log::add('infoloc','info',$this->getHumanName().' '.__('est présent', __FILE__));
                         }
                     } else {
                         if( $presentCmd->execCmd() != 0 ) {
                             $presentCmd->event(0);
+                            log::add('infoloc','info',$this->getHumanName().' '.__('est absent', __FILE__));
                         }
                     }
                     break;
             }
-
         }
     }
 
@@ -326,7 +334,7 @@ class infolocCmd extends cmd {
         if( $this->getConfiguration('mode') == 'fixe' ) {
             log::add('infoloc', 'debug', 'Valeur: '.$this->getConfiguration('coordinate'));
             if( !self::validateLatLong($this->getConfiguration('coordinate')) ) {
-                throw new \Exception(__('Coordonnées inccorectes.', __FILE__));
+                throw new \Exception(__('Coordonnées incorrectes.', __FILE__));
             }
         }
     }
@@ -363,11 +371,11 @@ class infolocCmd extends cmd {
             $avoid[] = "ferries";
         }
         $avoid = json_encode($avoid);
-        log::add('infoloc', 'debug', 'Params: '.config::byKey('language'));
-        log::add('infoloc', 'debug', 'Params: '.$profile);
-        log::add('infoloc', 'debug', 'Params: '.$hyghway);
-        log::add('infoloc', 'debug', 'Params: '.$toll);
-        log::add('infoloc', 'debug', 'Params: '.$ferry);
+        log::add('infoloc', 'debug', 'Langue: '.config::byKey('language'));
+        log::add('infoloc', 'debug', 'Profile: '.$profile);
+        log::add('infoloc', 'debug', 'Autoroute: '.$hyghway);
+        log::add('infoloc', 'debug', 'Péages: '.$toll);
+        log::add('infoloc', 'debug', 'Ferry: '.$ferry);
 
         $options = '{"instructions":"false","preference":"recommended","geometry":"false",';
         $options.= '"options":{"avoid_features":'.$avoid.'},"units":"km",';
@@ -397,6 +405,12 @@ class infolocCmd extends cmd {
         log::add('infoloc', 'debug', 'Reponse: '.$response);
 
         $data = json_decode($response, true);
+
+        if( array_key_exists('error', $data) ) {
+            log::add('infoloc', 'error', $data['error']);
+            return array('distance' => '', 'time' => '');
+        }
+
         $distance = $data['routes'][0]['summary']['distance'];
         $distance = round($distance, 1);
         $time = $data['routes'][0]['summary']['duration'];
@@ -444,7 +458,7 @@ class infolocCmd extends cmd {
                 if( count($to) == 2 && count($from) == 2 ) {
                     return self::distance($from[0], $from[1], $to[0], $to[1]);
                 }
-                return 0;
+                return '';
                 break;
             case 'roaddist':
                 $from = infolocCmd::byId($this->getConfiguration('from'));
@@ -457,7 +471,7 @@ class infolocCmd extends cmd {
                     $result = self::calcultrajet($from->execCmd(), $to->execCmd(), $profil, $autoroute, $peages, $ferry);
                     return $result['distance'];
                 } catch (Exception $e) {
-                    return 0;
+                    return '';
                 }
                 break;
             case 'roadtime':
@@ -471,7 +485,7 @@ class infolocCmd extends cmd {
                     $result = self::calcultrajet($from->execCmd(), $to->execCmd(), $profil, $autoroute, $peages, $ferry);
                     return $result['time'];
                 } catch (Exception $e) {
-                    return 0;
+                    return '';
                 }
                 break;
         }

@@ -72,27 +72,29 @@ try {
     if (init('action') == 'FindAppBin') {
 		$PingCmd = infoloc::GetPingCmd();
 		if ( $PingCmd === false ) {
-			$message = __("La commande ping est introuvable, relancer les dépendances.<br>",__FILE__);
-			config::save("cmd_ping", "", 'infoloc');
+			$message = __('La commande ping est introuvable, relancer les dépendances.',__FILE__);
+			config::save('cmd_ping', '', 'infoloc');
 		} else {
-			$message = __("La commande ping est \"".$PingCmd."\"<br>",__FILE__);
-			config::save("cmd_ping", $PingCmd, 'infoloc');
+			$message = __('La commande ping est',__FILE__).' '.$PingCmd;
+			config::save('cmd_ping', $PingCmd, 'infoloc');
 		}
+        $message .= '<br />';
 		$ArpingCmd = infoloc::GetArpingCmd();
 		if ( $ArpingCmd === false ) {
-			$message .= __("La commande arping est introuvable, relancer les dépendances.<br>",__FILE__);
-			config::save("cmd_arping", "", 'infoloc');
+			$message .= __('La commande arping est introuvable, relancer les dépendances.',__FILE__);
+			config::save('cmd_arping', '', 'infoloc');
 		} else {
-			$message .= __("La commande arping est \"".$ArpingCmd."\"<br>",__FILE__);
-			config::save("cmd_arping", $ArpingCmd, 'infoloc');
+			$message .= __('La commande arping est',__FILE__).' '.$ArpingCmd;
+			config::save('cmd_arping', $ArpingCmd, 'infoloc');
 		}
+        $message .= '<br />';
         $ArpscanCmd = infoloc::GetArpscanCmd();
 		if ( $ArpscanCmd === false ) {
-			$message .= __("La commande arp-scan est introuvable, relancer les dépendances.",__FILE__);
-			config::save("cmd_arpscan", "", 'infoloc');
+			$message .= __('La commande arp-scan est introuvable, relancer les dépendances.',__FILE__);
+			config::save('cmd_arpscan', '', 'infoloc');
 		} else {
-			$message .= __("La commande arp-scan est \"".$ArpscanCmd."\"",__FILE__);
-			config::save("cmd_arpscan", $ArpscanCmd, 'infoloc');
+			$message .= __('La commande arp-scan est',__FILE__).' '.$ArpscanCmd;;
+			config::save('cmd_arpscan', $ArpscanCmd, 'infoloc');
 		}
 
 		if ( $PingCmd === false || $ArpingCmd === false || $ArpscanCmd === false ) {
