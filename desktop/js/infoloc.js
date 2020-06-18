@@ -18,6 +18,8 @@ $('.eqLogicAttr[data-l1key=configuration][data-l2key=type]').on('change',functio
     if( $(this).value() == 'adresse' ) {
         $('.pingModeSel').hide();
         $('.pingMode').hide();
+    } else {
+        $('.pingModeSel').show();
     }
 });
 

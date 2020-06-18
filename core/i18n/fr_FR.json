@@ -6,6 +6,7 @@
     "Mes clients": "Mes clients",
     "Mes adresses": "Mes adresses",
     "Rechercher": "Rechercher",
+    "Configuration": "Configuration",
     "Configuration avancée": "Configuration avancée",
     "Dupliquer": "Dupliquer",
     "Sauvegarder": "Sauvegarder",
@@ -20,17 +21,22 @@
     "Scan ARP": "Scan ARP",
     "Adresse IP": "Adresse IP",
     "Adresse MAC": "Adresse MAC",
+    "Interface": "Interface",
     "Activer": "Activer",
     "Visible": "Visible",
-    "Mode": "Mode",
+    "Détection de présence": "Détection de présence",
     "Exemple d'URL à appeler": "Exemple d'URL à appeler",
     "Nom": "Nom",
     "Type": "Type",
     "Options": "Options",
     "Paramètres": "Paramètres",
-    "Cliquez-ici pour obtenir les coordonnées": "Cliquez-ici pour obtenir les coordonnées"
+    "Cliquez-ici pour obtenir les coordonnées": "Cliquez-ici pour obtenir les coordonnées",
+    "Token ORS non renseigné. Rendez-vous sur la page de configuration.": "Token ORS non renseigné. Rendez-vous sur la page de configuration.",
+    "Détection de présence impossible. Rendez-vous sur la page de configuration.": "Détection de présence impossible. Rendez-vous sur la page de configuration."
   },
   "plugins\/infoloc\/desktop\/js\/infoloc.js": {
+    "Ajouter un adresse en cours": "Ajouter un adresse en cours",
+    "Ajout effectué.": "Ajout effectué.",
     "Numérique": "Numérique",
     "Binaire": "Binaire",
     "Autre": "Autre",
@@ -50,9 +56,16 @@
   },
   "plugins\/infoloc\/core\/ajax\/infoloc.ajax.php": {
     "Equipement inconnu : ": "Equipement inconnu : ",
-    "Equipement non Infos & Localisation : ": "Equipement non Infos & Localisation : "
+    "Equipement non Infos & Localisation : ": "Equipement non Infos & Localisation : ",
+    "La commande ping est introuvable, relancer les dépendances.": "La commande ping est introuvable, relancer les dépendances.",
+    "La commande ping est": "La commande ping est",
+    "La commande arping est introuvable, relancer les dépendances.": "La commande arping est introuvable, relancer les dépendances.",
+    "La commande arping est": "La commande arping est",
+    "La commande arp-scan est introuvable, relancer les dépendances.": "La commande arp-scan est introuvable, relancer les dépendances.",
+    "La commande arp-scan est": "La commande arp-scan est"
   },    
   "plugins\/infoloc\/core\/api\/jeeInfoloc.php": {
+    "Clef API non valide, vous n'êtes pas autorisé à effectuer cette action (Infos & Localisation)": "Clef API non valide, vous n'êtes pas autorisé à effectuer cette action (Infos & Localisation)",
     "Commande ID inconnue : ": "Commande ID inconnue : ",
     "Commande inconnue de Infos & Localisation : ": "Commande inconnue de Infos & Localisation : ",
     "Commande Infos & Localisation non autorisée : ": "Commande Infos & Localisation non autorisée : "
@@ -60,9 +73,13 @@
   "plugins\/infoloc\/core\/class\/infoloc.class.php": {
     "Position GPS": "Position GPS",
     "Présent": "Présent",
+    "est présent": "est présent",
+    "est absent": "est absent",
+    "Coordonnées incorrectes.": "Coordonnées incorrectes.",
     "Cet équipement à déjà une commande de batterie": "Cet équipement à déjà une commande de batterie",
     "Erreur Hostname (gethostbyname)": "Erreur Hostname (gethostbyname)",
-    "Erreur adresse mac": "Erreur adresse mac"
+    "Erreur adresse mac": "Erreur adresse mac",
+    "Coordonnées incorrectes.":"Coordonnées incorrectes."
   },
   "plugins\/infoloc\/plugin_info\/configuration.php": {
     "Coordonnées Jeedom": "Coordonnées Jeedom",

@@ -21,12 +21,11 @@ $plugin = plugin::byId('infoloc');
 sendVarToJS('eqType', $plugin->getId());
 $eqLogics = eqLogic::byType($plugin->getId());
 
-
-if( config::byKey('tokenORS', 'infoloc') != "" ) {
-	echo '<div class="alert jqAlert alert-warning" id="div_inclusionAlert" style="margin : 0px 5px 15px 15px; padding : 7px 35px 7px 15px;">{{PAS ORS}}</div>';
+if( config::byKey('tokenORS', 'infoloc') == '' ) {
+	echo '<div class="jqAlert alert-warning" id="div_pasTokenORS" style="width: 100%;">{{Token ORS non renseigné. Rendez-vous sur la page de configuration.}}</div>';
 }
-if( config::byKey('tokenORS', 'infoloc') != "" ) {
-	echo '<div class="alert jqAlert alert-warning" id="div_inclusionAlert" style="margin : 0px 5px 15px 15px; padding : 7px 35px 7px 15px;">{{PAS PING}}</div>';
+if( config::byKey('cmd_ping','infoloc') == '' && config::byKey('cmd_arping','infoloc') == '' && config::byKey('cmd_arpscan','infoloc') == '') {
+	echo '<div class="jqAlert alert-warning" id="div_pasCMDPing" style="width: 100%;">{{Détection de présence impossible. Rendez-vous sur la page de configuration.}}</div>';
 }
 ?>
 <div class="row row-overflow">
@@ -39,7 +38,11 @@ if( config::byKey('tokenORS', 'infoloc') != "" ) {
             <div class="cursor eqLogicAction logoSecondary" data-action="addAdresse">
                 <i class="fas fa-crosshairs"></i><br /><span>{{Ajouter Adresse}}</span>
             </div>
+            <div class="cursor eqLogicAction logoSecondary" data-action="gotoPluginConf">
+                <i class="fas fa-wrench"></i><br /><span>{{Configuration}}</span>
+            </div>
         </div>
+
         <legend><i class="fas fa-table"></i> {{Mes clients}}</legend>
         <input class="form-control" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
         <div class="eqLogicThumbnailContainer">
@@ -119,7 +122,7 @@ if( config::byKey('tokenORS', 'infoloc') != "" ) {
                         </div>
 
                         <div class="form-group pingModeSel">
-                            <label class="col-sm-2 control-label">{{Mode}}</label>
+                            <label class="col-sm-2 control-label">{{Détection de présence}}</label>
                             <div class="col-sm-9">
                                 <select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="pingMode">
                                     <option value="none">{{Aucun}}</option>
@@ -139,6 +142,22 @@ if( config::byKey('tokenORS', 'infoloc') != "" ) {
                             <label class="col-sm-2 control-label">{{Adresse MAC}}</label>
                             <div class="col-sm-9">
                                 <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="pingmac"/>
+                            </div>
+                        </div>
+                        <div class="form-group pingMode arps arpi">
+                            <label class="col-sm-2 control-label">{{Interface}}</label>
+                            <div class="col-sm-9">
+                                <select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="pingEth">
+                                    <?php
+                                    $allinterfaces = network::getInterfaces();
+                                    if( ($key = array_search('lo', $allinterfaces) ) !== false) {
+                                        unset($allinterfaces[$key]);
+                                    }
+                                    foreach( $allinterfaces as $interface ) {
+                                        echo '<option value="' . $interface . '">' . $interface . '</option>';
+                                    }
+                                    ?>
+                                </select>
                             </div>
                         </div>
                     </fieldset>
