@@ -113,4 +113,10 @@ Elle doivent être au format Latitude,Longitude
 Exemples de configuration sur mobile
 =========
 
-A venir
+##### Envoie du niveau de Batterie
+Envoie à jeedom du niveau de batterie.
+![exempleBatterie](../images/9_configBat.png)
+
+##### Envoie de la position GPS
+Force la récupération des infos GPS et envoi à Jeedom que si je ne suis pas sur mon wifi.
+![exempleLocalisation](../images/9_configLoc.png)
