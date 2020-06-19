@@ -342,6 +342,10 @@ class infolocCmd extends cmd {
             $to = '#'.$this->getConfiguration('to').'#';
             $this->setValue($from.$to);
         }
+        if( substr($this->getConfiguration('apiProfile'), 0, 7) != 'driving' && ($this->getConfiguration('mode') == 'roaddist' || $this->getConfiguration('mode') == 'roadtime') ) {
+            $this->setConfiguration('autoroute', '0');
+            $this->setConfiguration('peage', '0');
+        }
         if( $this->getConfiguration('mode') == 'fixe' ) {
             log::add('infoloc', 'debug', 'Valeur: '.$this->getConfiguration('coordinate'));
             if( !self::validateLatLong($this->getConfiguration('coordinate')) ) {
@@ -351,16 +355,24 @@ class infolocCmd extends cmd {
     }
 
     public function postSave() {
-        log::add('infoloc', 'debug', 'CMD - PostSave');
         switch( $this->getConfiguration('mode') ) {
             case 'fixe':
                 $this->event($this->getConfiguration('coordinate'));
+                break;
+            case 'gpsdist':
+                $this->execute();
+                break;
+            case 'roaddist':
+                $this->execute();
+                break;
+            case 'roadtime':
+                $this->execute();
                 break;
         }
     }
 
     function validateLatLong($geo) {
-        log::add('infoloc', 'debug', 'GEO: '.$geo);
+        log::add('infoloc', 'debug', 'Validation coordonnées: '.$geo);
         return preg_match("/^[-]?((([0-8]?[0-9])(\.(\d{1,15}))?)|(90(\.0+)?)),\s?[-]?((((1[0-7][0-9])|([0-9]?[0-9]))(\.(\d{1,15}))?)|180(\.0+)?)$/", $geo);
     }
 
@@ -372,27 +384,38 @@ class infolocCmd extends cmd {
         $to = explode(',', $to);
 
         $avoid = array();
-        if( $hyghway != 1 ) {
-            $avoid[] = "highways";
-        }
-        if( $toll != 1 ) {
-            $avoid[] = "tollways";
+        $preference = 'recommended';
+        $optionsAdd = '';
+        // "options":{"avoid_features":["ferries","tollways","highways"],"vehicle_type":"hgv"}
+        if( substr($profile, 0, 7) == 'driving' ) {
+            if( $hyghway != 1 ) {
+                $avoid[] = "highways";
+            }
+            if( $toll != 1 ) {
+                $avoid[] = "tollways";
+            }
+            if( $profile == 'driving-hgv' ) {
+                $preference = 'fastest';
+                $optionsAdd = ',"vehicle_type":"hgv"';
+            }
         }
         if( $ferry != 1 ) {
             $avoid[] = "ferries";
         }
         $avoid = json_encode($avoid);
-        log::add('infoloc', 'debug', 'Langue: '.config::byKey('language'));
-        log::add('infoloc', 'debug', 'Profile: '.$profile);
-        log::add('infoloc', 'debug', 'Autoroute: '.$hyghway);
-        log::add('infoloc', 'debug', 'Péages: '.$toll);
-        log::add('infoloc', 'debug', 'Ferry: '.$ferry);
 
-        $options = '{"instructions":"false","preference":"recommended","geometry":"false",';
-        $options.= '"options":{"avoid_features":'.$avoid.'},"units":"km",';
+        $token = config::byKey('tokenORS', 'infoloc');
+        $language = strtolower(config::byKey('language'));
+        $units = 'km';
+        if( $language == 'en_us' ) {
+            $units = 'mi';
+        }
+
+        $options = '{"instructions":"false","geometry":"false","suppress_warnings":"true",';
+        $options.= '"preference":"'.$recommended.'","language":"'.$language.'",';
+        $options.= '"options":{"avoid_features":'.$avoid.$optionsAdd'},"units":"'.$units.'",';
         $options.= '"coordinates":[['.$from[1].','.$from[0].'],['.$to[1].','.$to[0].']]';
         $options.= '}';
-        $token = config::byKey('tokenORS', 'infoloc');
 
         log::add('infoloc', 'debug', 'Options: '.$options);
 
@@ -418,7 +441,11 @@ class infolocCmd extends cmd {
         $data = json_decode($response, true);
 
         if( array_key_exists('error', $data) ) {
-            log::add('infoloc', 'error', $data['error']);
+            if( is_array($data['error']) ) {
+                log::add('infoloc', 'error', 'Erreur '.$data['error']['code'].' : '.$data['error']['message']);
+            } else {
+                log::add('infoloc', 'error', $data['error']);
+            }
             return array('distance' => '', 'time' => '');
         }
 
@@ -447,10 +474,8 @@ class infolocCmd extends cmd {
 
     public function execute($_options = array()) {
         log::add('infoloc', 'debug', '##################################');
-        log::add('infoloc', 'debug', print_r($_options, true));
         log::add('infoloc', 'debug', 'EQLOGIC_ID: '.$this->getEqLogic()->getId());
         log::add('infoloc', 'debug', 'CMD_ID: '.$this->getId());
-        log::add('infoloc', 'debug', $this->getType());
         log::add('infoloc', 'debug', $this->getConfiguration('mode'));
         log::add('infoloc', 'debug', '##################################');
 

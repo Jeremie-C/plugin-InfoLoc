@@ -14,6 +14,7 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
+// Pas de détection de présence si adresse
 $('.eqLogicAttr[data-l1key=configuration][data-l2key=type]').on('change',function(){
     if( $(this).value() == 'adresse' ) {
         $('.pingModeSel').hide();
@@ -23,11 +24,13 @@ $('.eqLogicAttr[data-l1key=configuration][data-l2key=type]').on('change',functio
     }
 });
 
+// Choix des champs suivant détection de présence
 $('.eqLogicAttr[data-l1key=configuration][data-l2key=pingMode]').on('change',function(){
     $('.pingMode').hide();
     $('.pingMode.'+$(this).value()).show();
 });
 
+// Detections des applications de détection de présence
 $('#bt_FindAppBin').on('click', function() {
     $.ajax({
         type: "POST",
@@ -61,16 +64,7 @@ $('#bt_FindAppBin').on('click', function() {
     });
 });
 
-optionCmdFrom = null;
-optionCmdDest = null;
-eqLogicCmd = null;
-
-$('.eqLogicAttr[data-l1key=id]').change(function () {
-    if( $(this).value() != '' ) {
-        eqLogicCmd = $(this).value();
-    }
-});
-
+// Appui sur le bouton Ajouter Adresse
 $('.eqLogicAction[data-action=addAdresse]').on('click', function () {
     $('#div_alert').showAlert({message: '{{Ajouter un adresse en cours}}', level: 'warning'});
     $.post({
@@ -93,6 +87,7 @@ $('.eqLogicAction[data-action=addAdresse]').on('click', function () {
     });
 });
 
+// Choix des divs a afficher suivant le type d'équipement
 $( "#typeEq" ).change(function(){
     if( $('#typeEq').value() == 'adresse' ) {
         $('#alertCMD').hide();
@@ -105,6 +100,18 @@ $( "#typeEq" ).change(function(){
     }
 });
 
+optionCmdFrom = null;
+optionCmdDest = null;
+eqLogicCmd = null;
+
+// Application dynamique de l'ID de la commande
+$('.eqLogicAttr[data-l1key=id]').change(function () {
+    if( $(this).value() != '' ) {
+        eqLogicCmd = $(this).value();
+    }
+});
+
+// Modification des paramètres de la commande suivant le type
 $('#table_cmd tbody').delegate('.cmdAttr[data-l1key=configuration][data-l2key=mode]', 'change', function () {
     var tr = $(this).closest('tr');
     tr.find('.modeOption').hide();
@@ -115,6 +122,16 @@ $('#table_cmd tbody').delegate('.cmdAttr[data-l1key=configuration][data-l2key=mo
         tr.find('.cmdAttr[data-l1key=subtype]').value('numeric');
     } else {
         tr.find('.cmdAttr[data-l1key=subtype]').value('string');
+    }
+});
+
+// Modification affichage des options suivant le mode de transport
+$('#table_cmd tbody').delegate('.cmdAttr[data-l1key=configuration][data-l2key=apiProfile]', 'change', function () {
+    var tr = $(this).closest('tr');
+    if( $(this).value().substring(0,7) == 'driving' ) {
+        tr.find('.driving').show();
+    } else {
+        tr.find('.driving').hide();
     }
 });
 
@@ -240,9 +257,9 @@ function addCmdToTable(_cmd) {
     tr += '<option value="foot-walking">{{Marchant}}</option>';
     tr += '<option value="driving-hgv">{{Poid Lourd}}</option>';
     tr += '</select> ';
-    tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="configuration" data-l2key="autoroute" checked/>{{Autoroutes}}</label> ';
-    tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="configuration" data-l2key="peage" checked/>{{Péages}}</label> ';
-    tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="configuration" data-l2key="ferry"/>{{Ferry}}</label> ';
+    tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="configuration" data-l2key="autoroute" checked/>{{Autoroutes}} </label>';
+    tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="configuration" data-l2key="peage" checked/>{{Péages}} </label>';
+    tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="configuration" data-l2key="ferry"/>{{Ferry}}</label>';
     tr += '</span>';
 
     tr += '</td>';
