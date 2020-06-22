@@ -7,5 +7,8 @@
 >Changelog détaillé :
 ><https://github.com/Jeremie-C/plugin-InfoLoc/commits/master>
 
+## 22/06/2020
+- Correction erreur typo classe cmd
+
 ## 19/06/2020
 - Première version publiée sur le Market
