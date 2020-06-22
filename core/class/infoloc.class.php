@@ -386,7 +386,7 @@ class infolocCmd extends cmd {
         $avoid = array();
         $preference = 'recommended';
         $optionsAdd = '';
-        // "options":{"avoid_features":["ferries","tollways","highways"],"vehicle_type":"hgv"}
+
         if( substr($profile, 0, 7) == 'driving' ) {
             if( $hyghway != 1 ) {
                 $avoid[] = "highways";
@@ -396,7 +396,7 @@ class infolocCmd extends cmd {
             }
             if( $profile == 'driving-hgv' ) {
                 $preference = 'fastest';
-                $optionsAdd = ',"vehicle_type":"hgv"';
+                $optionsAdd.= ',"vehicle_type":"hgv"';
             }
         }
         if( $ferry != 1 ) {
@@ -413,7 +413,7 @@ class infolocCmd extends cmd {
 
         $options = '{"instructions":"false","geometry":"false","suppress_warnings":"true",';
         $options.= '"preference":"'.$recommended.'","language":"'.$language.'",';
-        $options.= '"options":{"avoid_features":'.$avoid.$optionsAdd'},"units":"'.$units.'",';
+        $options.= '"options":{"avoid_features":'.$avoid.$optionsAdd.'},"units":"'.$units.'",';
         $options.= '"coordinates":[['.$from[1].','.$from[0].'],['.$to[1].','.$to[0].']]';
         $options.= '}';
 
