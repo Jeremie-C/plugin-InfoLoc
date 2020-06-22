@@ -198,7 +198,7 @@ class infoloc extends eqLogic {
             $presentCmd = $this->getCmd(null, 'present');
             $posgpsCmd = $this->getCmd(null, 'gpspos');
             $geo = config::byKey('info::latitude').','.config::byKey('info::longitude');
-            if( $cmd->validateLatLong($geo) ) {
+            if( infolocCmd::validateLatLong($geo) ) {
                 $gpspos = $geo;
             } else {
                 $gpspos = '';
