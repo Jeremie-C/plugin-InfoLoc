@@ -207,8 +207,8 @@ class infoloc extends eqLogic {
             switch( $this->getConfiguration('pingMode') ) {
                 case 'arps':
                     $cmd = config::byKey('cmd_arpscan', 'infoloc');
-                    $cmd.= ' -l -g --retry=5 -t 800 -T';
-                    $cmd.= ' -I '.$this->getConfiguration('pingEth').' ';
+                    $cmd.= ' -I '.$this->getConfiguration('pingEth');
+                    $cmd.= ' -l -g --retry=5 -t 800 -T ';
                     $cmd.= $this->getConfiguration('pingmac').' 2>&1';
 
                     log::add('infoloc','debug',$cmd);
