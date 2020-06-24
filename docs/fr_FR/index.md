@@ -82,13 +82,13 @@ Vous pouvez ajouter autant de commandes que vous voulez. Les types disponibles s
 - Numérique : Récupération d'une information texte (signal wifi, signal GSM, ...)
 - Binaire : Récupération d'un état (activation BT, activation wifi, ...)
 - Batterie : Commande préconfigurée pour stocker la valeur de batterie du client.
-- Distance Directe : Distance dite "A vol d'Oiseau". Vous devez choisir une "adresse".
+- Distance Directe : Distance dite "A vol d'oiseau". Vous devez choisir une "adresse".
 - Distance de trajet : Distance en km. Vous devez choisir une "adresse".
 - Temps de trajet : Temps en secondes. Vous devez choisir une "adresse".
 
 Pour ces deux derniers types, vous pouvez personnaliser les méthodes de calcul.
 - Moyen de transport : Voiture, Vélo, Camion ou à pieds.
-- Routes autorisées : Autouroute (portion gratuite), Péages et Ferry.
+- Routes autorisées : Autoroute (portion gratuite), Péages et Ferry.
 
 #### 2. Ajout d'adresse
 
