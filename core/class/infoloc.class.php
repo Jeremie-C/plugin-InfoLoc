@@ -405,14 +405,14 @@ class infolocCmd extends cmd {
         $avoid = json_encode($avoid);
 
         $token = config::byKey('tokenORS', 'infoloc');
-        $language = strtolower(config::byKey('language'));
+        $language = substr( strtolower(config::byKey('language')),0,2);
         $units = 'km';
         if( $language == 'en_us' ) {
             $units = 'mi';
         }
 
         $options = '{"instructions":"false","geometry":"false","suppress_warnings":"true",';
-        $options.= '"preference":"'.$recommended.'","language":"'.$language.'",';
+        $options.= '"preference":"'.$preference.'","language":"'.$language.'",';
         $options.= '"options":{"avoid_features":'.$avoid.$optionsAdd.'},"units":"'.$units.'",';
         $options.= '"coordinates":[['.$from[1].','.$from[0].'],['.$to[1].','.$to[0].']]';
         $options.= '}';
