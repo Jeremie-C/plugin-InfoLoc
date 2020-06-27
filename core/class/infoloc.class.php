@@ -412,7 +412,7 @@ class infolocCmd extends cmd {
         }
 
         $options = '{"instructions":"false","geometry":"false","suppress_warnings":"true",';
-        $options.= '"preference":"'.$recommended.'","language":"'.$language.'",';
+        $options.= '"preference":"'.$preference.'","language":"'.$language.'",';
         $options.= '"options":{"avoid_features":'.$avoid.$optionsAdd.'},"units":"'.$units.'",';
         $options.= '"coordinates":[['.$from[1].','.$from[0].'],['.$to[1].','.$to[0].']]';
         $options.= '}';
