@@ -405,7 +405,7 @@ class infolocCmd extends cmd {
         $avoid = json_encode($avoid);
 
         $token = config::byKey('tokenORS', 'infoloc');
-        $language = strtolower(config::byKey('language'));
+        $language = substr( strtolower(config::byKey('language')),0,2);
         $units = 'km';
         if( $language == 'en_us' ) {
             $units = 'mi';
