@@ -149,12 +149,12 @@ if( config::byKey('cmd_ping','infoloc') == '' && config::byKey('cmd_arping','inf
                             <div class="col-sm-9">
                                 <select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="pingEth">
                                     <?php
-                                    $allinterfaces = network::getInterfaces();
-                                    if( ($key = array_search('lo', $allinterfaces) ) !== false) {
-                                        unset($allinterfaces[$key]);
-                                    }
-                                    foreach( $allinterfaces as $interface ) {
-                                        echo '<option value="' . $interface . '">' . $interface . '</option>';
+                                    $allinterfacesinfo = network::getInterfacesInfo();
+                                    foreach( $allinterfacesinfo as $interfaceinfo ) {
+                                        $interfacename = $interfaceinfo["ifname"];
+                                        if ( $interfacename !== "lo" ) {
+                                            echo '<option value="' . $interfacename . '">' . $interfacename . '</option>';
+                                        }
                                     }
                                     ?>
                                 </select>
